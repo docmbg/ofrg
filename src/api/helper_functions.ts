@@ -144,3 +144,7 @@ async function updateDigest() {
 
     return digest;
 }
+
+export function testForEcho(){
+    console.log('echo');
+}
