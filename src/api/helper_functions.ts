@@ -1,5 +1,3 @@
-const paramUrl = window.location.href.includes('sites') ? 'sites' : 'teams';
-export const mainUrl = getMainUrl(paramUrl);
 const viewXML = "<View Scope='RecursiveAll'><Query><Where><Eq><FieldRef Name='FSObjType' /><Value Type='Integer'>0</Value></Eq></Where></Query></View>";
 const readOptions: any = {
     method: 'GET', // or 'PUT'
@@ -22,11 +20,7 @@ const postOptions = {
     body: JSON.stringify({ 'query': { '__metadata': { 'type': 'SP.CamlQuery' }, 'ViewXml': viewXML } }),
 }
 
-function getMainUrl(param: string) {
-    let urlParts = window.location.href.split(`${param}/`);
-    let result = `${urlParts[0]}${param}/${urlParts[1].split('/')[0]}`;
-    return result;
-}
+
 
 export async function getAllSubSites(url: string, arr: Array<Object>, siteUrl: string) {
     let promises: any = [];
@@ -43,7 +37,7 @@ export async function getAllSubSites(url: string, arr: Array<Object>, siteUrl: s
         });
     }
     await fetch(fetchUrl, readOptions).then(res => res.json())
-        .catch(error => console.error('Error:', error))
+        // .catch(error => console.error('Error:', error))
         .then(response => {
             response.d.results.map((e: any) => {
                 arr.push({
@@ -83,7 +77,7 @@ export async function getAllLists(url: string, libsOnly: boolean) {
     return lists;
 }
 
-export async function getAllFiles(sites: Array<any>) {
+export async function getAllFiles(sites: Array<any>, mainUrl: string) {
     let promises = [];
     let allFiles = [];
     let lists;
@@ -93,17 +87,11 @@ export async function getAllFiles(sites: Array<any>) {
         promises.push(getAllLists(site.url, true));
     }
     lists = await Promise.all(promises);
-    promises = [];
-    console.log(lists, sites);
     for (let site of sites) {
         for (let list of lists[counter]) {
             if (list.ItemCount < 4999 && !list.Title.includes('?')) {
-                promises.push(getFilesFromLibrary(site.url, list.Title));
-                if(promises.length === 100){
-                    batch = await Promise.all(promises);
-                    allFiles.push(batch);
-                    promises = [];
-                }
+                batch = await getFilesFromLibrary(site.url, list.Title, mainUrl);
+                allFiles.push(batch);
             }
         }
         counter++;
@@ -111,8 +99,8 @@ export async function getAllFiles(sites: Array<any>) {
     return allFiles;
 }
 
-async function getFilesFromLibrary(siteUrl: string, libraryName: string) {
-    const digest = await updateDigest();
+async function getFilesFromLibrary(siteUrl: string, libraryName: string, mainUrl: string) {
+    const digest = await updateDigest(mainUrl);
     postOptions.headers[`X-RequestDigest`] = digest;
     let files = await fetch(`${siteUrl}/_api/web/lists/getbytitle('${encodeURIComponent(libraryName)}')/getitems/?$expand=File`, postOptions).
         then(res => {
@@ -133,7 +121,7 @@ async function getFilesFromLibrary(siteUrl: string, libraryName: string) {
     return files;
 }
 
-async function updateDigest() {
+async function updateDigest(mainUrl: string) {
     let digest = await fetch(`${mainUrl}/_api/contextinfo`, {
         method: 'POST',
         credentials: 'include',
@@ -145,6 +133,6 @@ async function updateDigest() {
     return digest;
 }
 
-export function testForEcho(){
+export function testForEcho() {
     console.log('echo');
 }
