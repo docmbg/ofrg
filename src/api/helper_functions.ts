@@ -79,23 +79,36 @@ export async function getAllLists(url: string, libsOnly: boolean) {
 
 export async function getAllFiles(sites: Array<any>, mainUrl: string) {
     let promises = [];
-    let allFiles = [];
     let lists;
-    let counter = 0;
-    let batch;
+    let siteCounter = 0;
+    let listCounter = 0;
+    let batch = [];
     for (let site of sites) {
         promises.push(getAllLists(site.url, true));
     }
     lists = await Promise.all(promises);
+    promises = [];
     for (let site of sites) {
-        for (let list of lists[counter]) {
+        listCounter = 0;
+        for (let list of lists[siteCounter]) {
+            listCounter++;
             if (list.ItemCount < 4999 && !list.Title.includes('?')) {
-                batch = await getFilesFromLibrary(site.url, list.Title, mainUrl);
-                allFiles.push(batch);
+                promises.push(getFilesFromLibrary(site.url, list.Title, mainUrl));
+                // if(siteCounter === sites.length-1 && listCounter === lists[siteCounter].length-1){
+                //     batch = await Promise.all(promises);
+                //     allFiles.push(batch); 
+                //     promises = [];
+                // }
+                // if(promises.length === 50){
+                //     batch = await Promise.all(promises);
+                //     allFiles.push(batch);
+                //     promises = [];
+                // }
             }
         }
-        counter++;
+        siteCounter++;
     }
+    const allFiles = await Promise.all(promises);
     return allFiles;
 }
 
@@ -108,7 +121,7 @@ async function getFilesFromLibrary(siteUrl: string, libraryName: string, mainUrl
                 return res.json();
             } else {
 
-                return 'error'
+                return {results: []}
             }
         }).then(res => {
             if (res.hasOwnProperty('d')) {
