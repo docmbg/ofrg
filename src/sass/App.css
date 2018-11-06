@@ -1,0 +1,24 @@
+.material-icons.whiteColor {
+    color:white!important;
+}
+
+.circle {
+    padding: 10px!important;
+}
+
+.green {
+    background: #4CAF50;
+}
+.yellow {
+    background: #ffeb3b;
+}
+.blue {
+    background: #2196F3 
+}
+.grey {
+    background: #999;
+}
+
+.right {
+    float:right;
+}
