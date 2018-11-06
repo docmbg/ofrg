@@ -12,6 +12,7 @@ export default function (props: any) {
                     value={'Select/Deselect All'} 
                     label={'Select/Deselect All'} 
                     onChange={() => props.select('Select/Deselect All')}
+                    checked={props.selectedAll}
                 />
                 {
                     props.sites.map((site: any) =>

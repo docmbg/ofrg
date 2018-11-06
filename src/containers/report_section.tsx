@@ -38,6 +38,7 @@ export default class ReportSection extends React.Component<any, any> {
                                 <Row>
                                     <Col s={3}/>
                                     <Col s={9}>
+                                    Of which
                                             <RecordSection iconColor='green' existingDropdown={false} existingTotal={false} title='Active Records' />
                                             <RecordSection iconColor='yellow' existingDropdown={false} existingTotal={false} title='Ready for Storage' />
                                     </Col>
@@ -62,6 +63,8 @@ export default class ReportSection extends React.Component<any, any> {
                                 <Row>
                                     <Col s={3}/>
                                     <Col s={9}>
+                                    Of which
+
                                             <RecordSection iconColor='green' existingDropdown={false} existingTotal={false} title='HPE Records' />
                                             <RecordSection iconColor='green' existingDropdown={false} existingTotal={false} title='HPQ Records' />
                                     </Col>

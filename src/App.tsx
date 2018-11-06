@@ -44,10 +44,15 @@ class App extends React.Component {
       if (site.title === title || title === 'Select/Deselect All') {
         checked = site.checked;
         siteTitle = site.title;
-        if (this.state.selectAll %2  == 0  &&  title == 'Select/Deselect All') {
+        if (this.state.selectAll % 2 == 0 && title == 'Select/Deselect All') {
           site = {
             title: siteTitle,
             checked: true
+          };
+        } else if (this.state.selectAll % 2 == 1 && title == 'Select/Deselect All'){
+          site = {
+            title: siteTitle,
+            checked: false
           };
         } else {
           site = {
@@ -62,7 +67,7 @@ class App extends React.Component {
     }
     this.setState({
       sites: checkSites,
-      selectAll: title == 'Select/Deselect All'? this.state.selectAll+1: this.state.selectAll
+      selectAll: title == 'Select/Deselect All' ? this.state.selectAll + 1 : this.state.selectAll
     });
   }
 
@@ -101,7 +106,7 @@ class App extends React.Component {
           </Col>
           <Col s={6}>
             <DocSelector selectorChange={(value: string) => this.docSelectorChange(value)} />
-            <SitesSection sites={this.state.sites} select={this.siteSelect.bind(this)} />
+            <SitesSection sites={this.state.sites} selectedAll={this.state.selectAll % 2 == 1} select={this.siteSelect.bind(this)} />
           </Col>
         </Row>
       </div>
