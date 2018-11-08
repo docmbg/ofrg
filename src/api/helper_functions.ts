@@ -20,7 +20,14 @@ const postOptions = {
     body: JSON.stringify({ 'query': { '__metadata': { 'type': 'SP.CamlQuery' }, 'ViewXml': viewXML } }),
 }
 
+export async function getUsers(mainUrl: string) {
+    return await fetch(`${mainUrl}/_api/Web/siteusers`, readOptions).then(res => res.json()).then(res => res.d.results)
+}
 
+export function findUser(id: number, users:any){
+    const user = users.filter((user: any)=> user.Id === id)[0];
+    return user? user['Email']: '';
+}
 
 export async function getAllSubSites(url: string, arr: Array<Object>, siteUrl: string) {
     let promises: any = [];
@@ -121,11 +128,16 @@ async function getFilesFromLibrary(siteUrl: string, libraryName: string, mainUrl
                 return res.json();
             } else {
 
-                return {results: []}
+                return { results: [] }
             }
         }).then(res => {
             if (res.hasOwnProperty('d')) {
-                return res.d
+                res.d.results = res.d.results.map((file:any)=> {
+                    file[`Library Location`] = siteUrl;
+                    file[`Library`] = libraryName;
+                    return file;
+                });
+                return res.d;
             } else {
                 return res
             }
@@ -146,6 +158,57 @@ async function updateDigest(mainUrl: string) {
     return digest;
 }
 
-export function testForEcho() {
-    console.log('echo');
+export async function detectStaticDocumentColumns(url: string) {
+    // const headers = ['Type', 'Name', ...columns, 'Created By', 'Modified By', 'Created', 'Last Modified',
+    // 'URL', 'ID', 'Library', 'Library Location']
+    const fields = await fetch(`${url}/_api/Web/ContentTypes('0x0101')/?$expand=Fields`,
+        readOptions).
+        then(res => res.json()).then(res => res.d.Fields.results);
+    const columnsObj: any = {
+        'Document Origin': [],
+        'Document Type': [],
+        'Record Series Code': [],
+        'Record Type': [],
+        'Fiscal Year': [],
+        'Archive Date': [],
+    };
+    for (let field of fields) {
+        let phStatic = field.StaticName.toLowerCase();
+        let phDisplay = field.Title.toLowerCase();
+        if (phStatic.includes('origin') || phDisplay.includes('origin')) {
+            columnsObj['Document Origin'].push(field.StaticName);
+        } else if (
+            (phStatic.includes('type') && phStatic.includes('document')) ||
+            (phDisplay.includes('type') && phDisplay.includes('document'))
+        ) {
+            columnsObj['Document Type'].push(field.StaticName);
+        } else if (
+            (phStatic.includes('series') && phStatic.includes('code'))
+        ) {
+            columnsObj['Record Series Code'].push(field.StaticName);
+        } else if (
+            (phStatic.includes('type') && phStatic.includes('record'))
+        ) {
+            columnsObj['Record Type'].push(field.StaticName);
+        } else if (phStatic.includes('fiscal') || phStatic.includes('fy') || phDisplay.includes('fiscal')) {
+            columnsObj['Fiscal Year'].push(field.StaticName);
+        } else if (phStatic.includes('archive') || phDisplay.includes('archive')) {
+            columnsObj['Archive Date'].push(field.StaticName);
+        }
+    }
+    const columns = [];
+    const headersForColumns = [];
+    for (let key in columnsObj) {
+        for (let i = 0; i < columnsObj[key].length; i++) {
+            headersForColumns.push(key);
+        }
+        columns.push(...columnsObj[key]);
+    }
+    const headers = ['Type', 'Name', ...headersForColumns, 'Created By', 'Modified By', 'Created', 'Last Modified',
+        'URL', 'ID', 'Library', 'Library Location']
+    return { columns, headers };
+}
+
+export function getType(name: string) {
+    return name.split('.')[name.split('.').length - 1];
 }

@@ -7,7 +7,7 @@ export default function (props: any) {
 
     return (
         <Row>
-            <Input s={6} type='select' onChange={(event: any) => props.selectorChange(event.target.value)}>
+            <Input s={12} type='select' onChange={(event: any) => props.selectorChange(event.target.value)}>
                 {
                     docTypes.map((type: any) => <option key={type} value={type}>{type}</option>)
                 }
