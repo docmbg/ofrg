@@ -136,8 +136,9 @@ class App extends React.Component {
     const that = this;
     const columns = this.state.columns;
     const users = this.state.users;
+    const docSelector = this.state.docSelector;
     const filteredSites = this.state.sites.filter((site: any) => site.checked === true);
-    workerFiles.postMessage({ mainUrl, filteredSites, columns, users });
+    workerFiles.postMessage({ mainUrl, filteredSites, columns, users, docSelector });
     workerFiles.onmessage = function (event: any) {
       that.setState({
         files: event.data.files
