@@ -3,7 +3,7 @@ import { getAllFiles, getType, findUser } from './helper_functions';
 const ctx: Worker = self as any;
 // Respond to message from parent thread
 ctx.addEventListener("message", (event) => {
-    let { filteredSites, mainUrl, columns, users } = event.data;
+    let { filteredSites, mainUrl, columns, users, docSelector } = event.data;
 
     async function callSharepoint() {
         let files: any = [];
@@ -16,7 +16,14 @@ ctx.addEventListener("message", (event) => {
         const onlyNeededInfo: any = [];
         let ph: any = [];
         let type;
+        let flag = docSelector == 'All Documents'? 1 : 0;
         for (let i = 0; i < newFilesArr.length; i++) {
+            for(let column of columns){
+                if(newFilesArr[i][column] == docSelector || flag == 1){
+                    flag = 1;
+                    break;
+                }
+            }
             ph = [];
             type = getType(newFilesArr[i][`File`][`Name`]);
             if (type !== "master" &&
@@ -26,7 +33,8 @@ ctx.addEventListener("message", (event) => {
                 type !== "xsn" &&
                 type !== "css" &&
                 type !== "xaml" &&
-                type !== "rules") {
+                type !== "rules" &&
+                flag == 1) {
                 ph.push(type);
                 ph.push(newFilesArr[i][`File`][`Name`]);
                 for (let column of columns) {

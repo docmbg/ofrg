@@ -1,4 +1,4 @@
-.material-icons.whiteColor {
+.whiteColor {
     color:white!important;
 }
 
@@ -7,7 +7,7 @@
 }
 
 .green {
-    background: #4CAF50;
+    background: #4CAF50!important;
 }
 .yellow {
     background: #ffeb3b;
@@ -44,4 +44,71 @@
 .btn:hover {
     background: #ffeb3b!important;
     color: black!important;
+}
+
+.progress {
+    background: black;
+}
+.progress .indeterminate {
+    background: #ffeb3b!important;
+}
+[type="checkbox"]:checked+label:before {
+    border-right: 2px solid #2196F3!important;
+    border-bottom: 2px solid #2196F3!important;
+}
+label {
+    color: black!important;
+    font-weight: 600;
+}
+.select-wrapper input.select-dropdown {
+    color: #2196F3;
+    font-weight: 600;
+}
+.dropdown-content li>a, .dropdown-content li>span {
+    
+    color: #2196F3!important;
+}
+
+.btn-floating {
+    right: 5%;
+    position: fixed;
+    bottom: 5%;
+}
+
+.btn-floating:hover > i {
+     color:black!important;
+}
+
+.orange {
+    -webkit-animation: rotation 2s infinite linear;
+    background: orange!important;
+}
+.btn.disabled {
+    background-color: #4CAF50 !important;
+}
+
+@-webkit-keyframes rotation {
+    from {
+            -webkit-transform: rotate(0deg);
+    }
+    to {
+            -webkit-transform: rotate(359deg);
+    }
+}
+.topBanner {
+    background: black!important;
+     color: white!important;
+}
+
+.topBanner > div > img {
+    margin-top: 1%;
+}
+.title {
+    font-size: 2em;
+}
+.title> span {
+    font-weight: 600;
+}
+.version {
+    font-size: 1.2em;
 }

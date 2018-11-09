@@ -3,12 +3,13 @@ import XLSX from 'xlsx';
 const ctx: Worker = self as any;
 // Respond to message from parent thread
 ctx.addEventListener("message", (event) => {
-    let { excelInfo, headers } = event.data;
+    // let { excelInfo, headers } = event.data;
     // const headers = ['Type', 'Name', ...columns, 'Created By', 'Modified By', 'Created', 'Last Modified', 'URL', 'ID', 'Library', 'Library Location']
-    let data: any = [[...headers]];
+    // let data: any = [[...headers]];
+    let data: any = []
     ctx.postMessage({ msg: 'Writing in Excel' });
-    for (var i = 0; i < excelInfo.length; i++) {
-        data.push(excelInfo[i]);
+    for (var i = 0; i < 20000; i++) {
+        data.push([1]);
     }
     var worksheet = XLSX.utils.aoa_to_sheet(data);
     var new_workbook = XLSX.utils.book_new();
