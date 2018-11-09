@@ -1,0 +1,47 @@
+.material-icons.whiteColor {
+    color:white!important;
+}
+
+.circle {
+    padding: 10px!important;
+}
+
+.green {
+    background: #4CAF50;
+}
+.yellow {
+    background: #ffeb3b;
+}
+.blue {
+    background: #2196F3 
+}
+.grey {
+    background: #999;
+}
+
+.right {
+    float:right;
+    cursor: pointer;
+}
+
+.row {
+    margin-bottom: 0px!important;
+}
+.collection .collection-item {
+    border: 1px solid #e0e0e0!important;
+    padding: 10px 20px 0px!important;
+}
+
+.insideChild {
+    margin-bottom: 2%!important;
+}
+
+.btn {
+    margin-top: 5%;
+    background: black!important;
+    color: #ffeb3b!important;
+}
+.btn:hover {
+    background: #ffeb3b!important;
+    color: black!important;
+}
