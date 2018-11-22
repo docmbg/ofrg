@@ -4,8 +4,7 @@ import * as React from 'react'
 export default function (props: any) {
 
     return (
-        <Row>
-            <Col s={6}>
+        <Col s={12}>
                 <Input 
                     s={12} 
                     type='checkbox' 
@@ -18,16 +17,15 @@ export default function (props: any) {
                     props.sites.map((site: any) =>
                         <Input
                             s={12}
-                            key={site.title}
+                            key={`${site.title} (${site.parent})`}
                             name='group1'
                             type='checkbox'
-                            value={site.tile}
-                            label={site.title}
+                            value={site.title}
+                            label={`${site.title} (${site.parent})`}
                             checked={site.checked}
-                            onChange={() => props.select(site.title)}
+                            onChange={() => props.select(`${site.title} (${site.parent})`)}
                         />)
                 }
-            </Col>
-        </Row>
+        </Col>
     )
 }

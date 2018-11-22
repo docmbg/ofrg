@@ -7,3 +7,4 @@ declare module "worker-loader!*" {
   }
 declare module 'file-saver';
 declare module 'react-materialize';
+declare module '*png';

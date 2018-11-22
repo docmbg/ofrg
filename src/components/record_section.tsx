@@ -3,13 +3,13 @@ import { Col, Row } from 'react-materialize';
 
 export default function (props: any) {
     return (
-        <Row>
-            <Col s={2}>
+        <Row className={props.isChild ? 'insideChild' : ''}>
+            <Col s={1}>
                 <i className={`material-icons whiteColor circle ${props.iconColor}`}>
                     folder
                 </i>
             </Col>
-            <Col s={9}>
+            <Col s={10} offset='s1'>
                 <span>{props.title}
                     {
                         props.existingDropdown ?
@@ -24,12 +24,12 @@ export default function (props: any) {
                     }
 
                 </span>
-                <p>{'0 Files'}
+                <p>{`${props.files} Files`}
                     {
                         props.existingTotal ?
                             <>
                                 <br />
-                                {'0% of Total'}
+                                {`${props.percent} of Total`}
                             </>
                             :
                             <></>

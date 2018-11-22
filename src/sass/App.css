@@ -1,4 +1,4 @@
-.material-icons.whiteColor {
+.whiteColor {
     color:white!important;
 }
 
@@ -7,13 +7,13 @@
 }
 
 .green {
-    background: #4CAF50;
+    background: #4CAF50!important;
 }
 .yellow {
     background: #ffeb3b;
 }
 .blue {
-    background: #2196F3 
+    background: #2196F3;
 }
 .grey {
     background: #999;
@@ -21,4 +21,123 @@
 
 .right {
     float:right;
+    cursor: pointer;
+}
+
+.row {
+    margin-bottom: 0px!important;
+}
+.collection .collection-item {
+    border: 1px solid #e0e0e0!important;
+    padding: 10px 20px 0px!important;
+}
+
+.insideChild {
+    margin-bottom: 2%!important;
+}
+
+.btn {
+    margin-top: 5%;
+    background: black!important;
+    color: #ffeb3b!important;
+}
+.btn:hover {
+    background: #ffeb3b!important;
+    color: black!important;
+}
+
+.progress {
+    background: black;
+}
+.progress .indeterminate {
+    background: #ffeb3b!important;
+}
+[type="checkbox"]:checked+label:before {
+    border-right: 2px solid #2196F3!important;
+    border-bottom: 2px solid #2196F3!important;
+}
+label {
+    color: black!important;
+    font-weight: 600;
+}
+.select-wrapper input.select-dropdown {
+    color: #2196F3;
+    font-weight: 600;
+}
+.dropdown-content li>a, .dropdown-content li>span {
+    
+    color: #2196F3!important;
+}
+
+.btn-floating {
+    right: 5%;
+    position: fixed;
+    bottom: 5%;
+}
+
+.btn-floating:hover > i {
+     color:black!important;
+}
+
+.orange {
+    -webkit-animation: rotation 2s infinite linear;
+    background: orange!important;
+}
+/* .btn.disabled {
+    background-color: #4CAF50 !important;
+} */
+
+@-webkit-keyframes rotation {
+    from {
+            -webkit-transform: rotate(359deg);
+    }
+    to {
+            -webkit-transform: rotate(0deg);
+    }
+}
+.topBanner {
+    background: black!important;
+     color: white!important;
+}
+
+.topBanner > div > img {
+    margin-top: 1%;
+}
+.title {
+    font-size: 2em;
+}
+.title> span {
+    font-weight: 600;
+}
+.version {
+    font-size: 1.2em;
+}
+
+.loader {
+    text-align:center;
+}
+
+.btn.green {
+    background: #4CAF50!important;
+}
+
+.loadingBar {
+    background: #2196F3;
+    height: 10px;
+}
+
+.warning {
+    text-align: center;
+    color: red;
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.warning>span {
+ font-size:2.5em;
+}
+
+.warning>.columns {
+    font-style:italic;
+    font-size:1.5em;
 }
