@@ -191,7 +191,9 @@ class App extends React.Component<any, any> {
         background: '#2196F3',
         height: '10px',
       },
+      listsLength: 0,
       loadedPercentage: `1%`,
+      currentResolvedLists: 0,
       stats: {
         information: 0,
         dxcRecord: 0,
@@ -199,6 +201,10 @@ class App extends React.Component<any, any> {
         hpqRecord: 0,
         activeRecord: 0,
         recordForStorage: 0
+      },
+      failedLibraries: {
+        'show': false,
+       
       },
     })
     workerFiles.postMessage({ mainUrl, filteredSites, columns, users, docSelector, columnsObj });

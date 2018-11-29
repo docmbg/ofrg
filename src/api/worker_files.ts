@@ -26,8 +26,9 @@ ctx.addEventListener("message", (event) => {
         let type;
         let flag = docSelector == 'All Documents' ? 1 : 0;
         for (let i = 0; i < newFilesArr.length; i++) {
-
+           
             if (newFilesArr[i] !== undefined && newFilesArr[i] !== null) {
+                flag = docSelector == 'All Documents' ? 1 : 0;
                 for (let column of columns) {
                     if (newFilesArr[i][column] == docSelector || flag == 1) {
                         flag = 1;
@@ -45,6 +46,7 @@ ctx.addEventListener("message", (event) => {
                     type !== "xaml" &&
                     type !== "rules" &&
                     flag == 1) {
+                    
                     ph.push(type);
                     ph.push(newFilesArr[i][`File`][`Name`]);
                     for (let column of columns) {

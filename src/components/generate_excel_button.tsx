@@ -10,7 +10,7 @@ export default function (props: any) {
             break;
         case 'loading':
             btn = <Button floating large className='orange spin' waves='light' icon='sync' />;
-            windows[`Materialize`].toast('Genarating Excel File', 5000);
+            windows[`Materialize`].toast('Generating Excel File', 5000);
             break;
         case 'done':
             btn = <Button floating disabled large className='green' waves='light' icon='check' />;

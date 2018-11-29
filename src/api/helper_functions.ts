@@ -118,7 +118,6 @@ export async function getAllFiles(sites: Array<any>, mainUrl: string, ctx: Worke
                     digest = await updateDigest(mainUrl);
                     batch = await Promise.all(promises);
                     allFiles.push(...batch);
-                    ctx.postMessage({resolvedList: 1});
                     promises = [];
 
                 }
@@ -127,7 +126,6 @@ export async function getAllFiles(sites: Array<any>, mainUrl: string, ctx: Worke
                     batch = await Promise.all(promises);
                     allFiles.push(...batch);
                     promises = [];
-                    ctx.postMessage({resolvedList: 150});
                     sleep(30000);
 
                 }
@@ -202,9 +200,13 @@ async function getFilesFromLibrary(siteUrl: string, libraryName: string, mainUrl
         http.onload = function (e) {
             if (http.status === 200) {
                 resolve(_parseJSON(http.responseText, libraryName, siteUrl, 'file'));
+                ctx.postMessage({resolvedList: 1});
+
             } else {
                 console.log('err json')
                 resolve({ results: [], err: 'JSON', 'Site': siteUrl, 'Title': libraryName });
+                ctx.postMessage({resolvedList: 1});
+
             }
         };
     });
